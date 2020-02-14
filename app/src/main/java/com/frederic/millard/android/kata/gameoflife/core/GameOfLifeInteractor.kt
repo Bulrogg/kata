@@ -1,23 +1,15 @@
 package com.frederic.millard.android.kata.gameoflife.core
 
+import com.frederic.millard.android.kata.gameoflife.presentation.GameOfLifePresenter
 import com.frederic.millard.android.kata.gameoflife.repository.WorldRepository
 
-interface GameOfLifeInteractor {
-    fun initWorld(height: Int, width: Int)
-    fun activateCell(x: Int, y: Int)
-    fun nextGeneration()
-}
 
-interface GameOfLifePresenter {
-    fun presentWorld(world: World)
-}
-
-class GameOfLifeInteractorImpl(
+class GameOfLifeInteractor(
     private val presenter: GameOfLifePresenter,
     private val repository: WorldRepository,
-    private val nextGenerationCalculator: NextGenerationCalculator) : GameOfLifeInteractor {
+    private val nextGenerationCalculator: NextGenerationCalculator) {
 
-    override fun initWorld(height: Int, width: Int) {
+    fun initWorld(height: Int, width: Int) {
         val initialWorld = World(
             height = height,
             width = width,
@@ -28,7 +20,7 @@ class GameOfLifeInteractorImpl(
         presenter.presentWorld(initialWorld)
     }
 
-    override fun activateCell(x: Int, y: Int) {
+    fun activateCell(x: Int, y: Int) {
         val actualWorld = repository.getStoredWorld()
         actualWorld?.let {
             val newCells = it.copy().cells
@@ -38,7 +30,7 @@ class GameOfLifeInteractorImpl(
         }
     }
 
-    override fun nextGeneration() {
+    fun nextGeneration() {
         val actualWorld = repository.getStoredWorld()
         actualWorld?.let {
             val newWorld = nextGenerationCalculator.computeNextGeneration(it)

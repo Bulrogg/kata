@@ -13,7 +13,7 @@ class GameOfLifePresenterImplTest {
 
     @Mock private lateinit var display: GameOfLifeDisplay
 
-    @InjectMocks private lateinit var presenter: GameOfLifePresenterImpl
+    @InjectMocks private lateinit var presenter: GameOfLifePresenter
 
     @Test
     fun `presentWorld when display the world`() {

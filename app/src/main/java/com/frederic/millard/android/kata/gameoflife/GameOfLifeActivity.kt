@@ -1,11 +1,11 @@
 package com.frederic.millard.android.kata.gameoflife
 
 import com.frederic.millard.android.kata.gameoflife.controller.GameOfLifeController
-import com.frederic.millard.android.kata.gameoflife.core.GameOfLifeInteractorImpl
+import com.frederic.millard.android.kata.gameoflife.core.GameOfLifeInteractor
 import com.frederic.millard.android.kata.gameoflife.core.NextGenerationCalculator
 import com.frederic.millard.android.kata.gameoflife.core.World
 import com.frederic.millard.android.kata.gameoflife.presentation.GameOfLifeDisplay
-import com.frederic.millard.android.kata.gameoflife.presentation.GameOfLifePresenterImpl
+import com.frederic.millard.android.kata.gameoflife.presentation.GameOfLifePresenter
 import com.frederic.millard.android.kata.gameoflife.repository.WorldRepository
 
 class GameOfLifeActivity : GameOfLifeDisplay {
@@ -14,9 +14,9 @@ class GameOfLifeActivity : GameOfLifeDisplay {
 
     init {
         val repository = WorldRepository()
-        val presenter = GameOfLifePresenterImpl(this)
+        val presenter = GameOfLifePresenter(this)
         val nextGenerationCalculator = NextGenerationCalculator()
-        val interactor = GameOfLifeInteractorImpl(presenter, repository, nextGenerationCalculator)
+        val interactor = GameOfLifeInteractor(presenter, repository, nextGenerationCalculator)
         controller = GameOfLifeController(interactor)
     }
 

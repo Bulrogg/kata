@@ -1,9 +1,9 @@
 package com.frederic.millard.android.kata.gameoflife
 
-import com.frederic.millard.android.kata.gameoflife.core.GameOfLifeInteractorImpl
-import com.frederic.millard.android.kata.gameoflife.core.GameOfLifePresenter
+import com.frederic.millard.android.kata.gameoflife.core.GameOfLifeInteractor
 import com.frederic.millard.android.kata.gameoflife.core.NextGenerationCalculator
 import com.frederic.millard.android.kata.gameoflife.core.World
+import com.frederic.millard.android.kata.gameoflife.presentation.GameOfLifePresenter
 import com.frederic.millard.android.kata.gameoflife.repository.WorldRepository
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.mock
@@ -15,29 +15,29 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class GameOfLifeInteractorImplTest {
+class GameOfLifeInteractorTest {
 
     @Mock private lateinit var presenter: GameOfLifePresenter
     @Mock private lateinit var repository: WorldRepository
     @Mock private lateinit var nextGenerationCalculator: NextGenerationCalculator
 
-    @InjectMocks private lateinit var interactor: GameOfLifeInteractorImpl
+    @InjectMocks private lateinit var interactor: GameOfLifeInteractor
 
     @Test
     fun `initWorld should present an empty world`() {
         // Given
-        val width = 2
         val height = 3
+        val width = 2
 
         // When
         interactor.initWorld(height, width)
 
         // Then
         val world = World(
-            height = 2,
-            width = 3,
+            height = 3,
+            width = 2,
             generationCount = 0,
-            cells = List(2) { List(3) { false } })
+            cells = List(3) { List(2) { false } })
         then(repository).should().storeWorld(world)
         then(presenter).should().presentWorld(world)
     }
