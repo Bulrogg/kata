@@ -1,6 +1,5 @@
 package com.frederic.millard.android.kata.gameoflife
 
-import com.frederic.millard.android.kata.gameoflife.core.Cell
 import com.frederic.millard.android.kata.gameoflife.core.GameOfLifeInteractorImpl
 import com.frederic.millard.android.kata.gameoflife.core.GameOfLifePresenter
 import com.frederic.millard.android.kata.gameoflife.core.NextGenerationCalculator
@@ -38,7 +37,7 @@ class GameOfLifeInteractorImplTest {
             height = 2,
             width = 3,
             generationCount = 0,
-            cells = List(2) { List(3) { Cell(isLiving = false) } })
+            cells = List(2) { List(3) { false } })
         then(repository).should().storeWorld(world)
         then(presenter).should().presentWorld(world)
     }
@@ -50,7 +49,7 @@ class GameOfLifeInteractorImplTest {
             height = 2,
             width = 3,
             generationCount = 2,
-            cells = List(3) { List(3) { Cell(false) } })
+            cells = List(3) { List(3) { false } })
         given(repository.getStoredWorld()).willReturn(world)
 
         // When
@@ -59,7 +58,7 @@ class GameOfLifeInteractorImplTest {
         // Then
         val newWorld = world.copy().cells
                 .map { it.toMutableList() }
-                .apply { get(1)[1] = Cell(isLiving = true) }
+                .apply { get(1)[1] = true }
 
         then(repository).should().storeWorld(world.copy(cells = newWorld))
     }

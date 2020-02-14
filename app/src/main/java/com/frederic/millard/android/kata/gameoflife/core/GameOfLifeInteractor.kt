@@ -22,11 +22,7 @@ class GameOfLifeInteractorImpl(
             height = height,
             width = width,
             generationCount = 0,
-            cells = List(height) {
-                List(width) {
-                    Cell(isLiving = false)
-                }
-            }
+            cells = List(height) { List(width) { false } }
         )
         repository.storeWorld(initialWorld)
         presenter.presentWorld(initialWorld)
@@ -37,7 +33,7 @@ class GameOfLifeInteractorImpl(
         actualWorld?.let {
             val newCells = it.copy().cells
                     .map { row -> row.toMutableList() }
-                    .apply { get(x)[y] = Cell(isLiving = true) }
+                    .apply { get(x)[y] = true }
             repository.storeWorld(it.copy(cells = newCells))
         }
     }
@@ -50,5 +46,4 @@ class GameOfLifeInteractorImpl(
             presenter.presentWorld(newWorld)
         }
     }
-
 }

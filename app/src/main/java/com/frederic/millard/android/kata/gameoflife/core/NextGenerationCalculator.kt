@@ -13,9 +13,8 @@ class NextGenerationCalculator {
                 List(width) { col ->
                     val livingCellAround = livingCellAroundCount(this, row, col)
                     val cell = cells[row][col]
-                    Cell(
-                        if (cell.isLiving) AROUND_COUNT_FOR_DYING.contains(livingCellAround)
-                        else AROUND_COUNT_FOR_LIVING.contains(livingCellAround))
+                    if (cell) AROUND_COUNT_FOR_DYING.contains(livingCellAround)
+                    else AROUND_COUNT_FOR_LIVING.contains(livingCellAround)
                 }
             }
             return actualWorld.copy(generationCount = generationCount + 1, cells = newCells)
@@ -35,7 +34,7 @@ class NextGenerationCalculator {
                 row + 1 to col + 1)
                     .filter { it.first in 0 until height && it.second in 0 until width }
                     .map { cells[it.first][it.second] }
-                    .count { it.isLiving }
+                    .count { it }
         }
     }
 

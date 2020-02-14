@@ -21,13 +21,17 @@ class GameOfLifeActivity : GameOfLifeDisplay {
     }
 
     fun simulateInteraction() {
-        controller.initWorld(height = 20, width = 20)
+        controller.initWorld(height = 20, width = 100)
 
         controller.activateCell(x = 8, y = 8)
         controller.activateCell(x = 8, y = 7)
         controller.activateCell(x = 8, y = 9)
         controller.activateCell(x = 7, y = 8)
         controller.activateCell(x = 9, y = 8)
+        //controller.activateCell(x = 9, y = 9)
+        //controller.activateCell(x = 9, y = 10)
+        //controller.activateCell(x = 9, y = 11)
+        //controller.activateCell(x = 9, y = 12)
 
         controller.start(generationTime = 500L)
     }
@@ -36,8 +40,7 @@ class GameOfLifeActivity : GameOfLifeDisplay {
         with(world) {
             println("Generation : $generationCount")
             cells.forEach {
-                println(it.fold("",
-                                { acc, cell -> acc + if (cell.isLiving) "O" else "-" }))
+                println(it.fold("", { acc, cell -> acc + if (cell) "O" else "-" }))
             }
         }
     }
