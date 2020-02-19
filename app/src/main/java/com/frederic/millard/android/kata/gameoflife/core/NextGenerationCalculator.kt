@@ -1,41 +1,24 @@
 package com.frederic.millard.android.kata.gameoflife.core
 
-class NextGenerationCalculator {
+class NextGenerationCalculator(private var livingCellAroundCalculator: LivingCellAroundCalculator) {
 
     companion object {
-        private val AROUND_COUNT_FOR_LIVING = listOf(3)
-        private val AROUND_COUNT_FOR_DYING = listOf(2, 3)
+        private val AROUND_LIVING_CELL_COUNT_TO_CONTINUE_LIVING = listOf(2, 3)
+        private val AROUND_LIVING_CELL_COUNT_TO_BE_BORN = listOf(3)
     }
 
-    fun computeNextGeneration(actualWorld: World): World {
-        with(actualWorld) {
-            val newCells = List(height) { row ->
-                List(width) { col ->
-                    val livingCellAround = livingCellAroundCount(this, row, col)
-                    val cell = cells[row][col]
-                    if (cell) AROUND_COUNT_FOR_DYING.contains(livingCellAround)
-                    else AROUND_COUNT_FOR_LIVING.contains(livingCellAround)
-                }
+    fun computeNextGeneration(world: World): World {
+        val newCells = List(world.height) { row ->
+            List(world.width) { col ->
+                val livingCellAround = livingCellAroundCalculator.computeLivingCellsAround(world, row, col)
+                val cell = world.cells[row][col]
+                if (cell) AROUND_LIVING_CELL_COUNT_TO_CONTINUE_LIVING.contains(livingCellAround)
+                else AROUND_LIVING_CELL_COUNT_TO_BE_BORN.contains(livingCellAround)
             }
-            return actualWorld.copy(generationCount = generationCount + 1, cells = newCells)
         }
+        return world.copy(
+            generationCount = world.generationCount + 1,
+            cells = newCells
+        )
     }
-
-    private fun livingCellAroundCount(world: World, row: Int, col: Int): Int {
-        return with(world) {
-            listOf(
-                row - 1 to col - 1,
-                row - 1 to col,
-                row - 1 to col + 1,
-                row to col - 1,
-                row to col + 1,
-                row + 1 to col - 1,
-                row + 1 to col,
-                row + 1 to col + 1)
-                    .filter { it.first in 0 until height && it.second in 0 until width }
-                    .map { cells[it.first][it.second] }
-                    .count { it }
-        }
-    }
-
 }
