@@ -13,9 +13,8 @@ class LivingCellAroundCalculator {
                 row + 1 to col - 1,
                 row + 1 to col,
                 row + 1 to col + 1)
-                    .filter { it.first in 0 until height && it.second in 0 until width }
-                    .map { cells[it.first][it.second] }
-                    .count { it }
+                    .filter { it.first in 0 until width && it.second in 0 until height }
+                    .count { cells[it.first][it.second] }
         }
     }
 }
