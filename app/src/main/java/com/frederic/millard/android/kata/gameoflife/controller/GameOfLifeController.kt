@@ -11,8 +11,8 @@ class GameOfLifeController(private val interactor: GameOfLifeInteractor) {
         interactor.initWorld(rowCount, colCount)
     }
 
-    fun activateCell(row: Int, col: Int) {
-        interactor.activateCell(row, col)
+    fun toggleCell(row: Int, col: Int) {
+        interactor.toggleCell(row, col)
     }
 
     fun changeGenerationTimeValue(generationTime: Long) {

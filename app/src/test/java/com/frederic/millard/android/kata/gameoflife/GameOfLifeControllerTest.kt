@@ -31,16 +31,16 @@ class GameOfLifeControllerTest {
     }
 
     @Test
-    fun `activateCell should call interactor`() {
+    fun `toggleCell should call interactor`() {
         // Given
         val y = 2
         val x = 3
 
         // When
-        controller.activateCell(x, y)
+        controller.toggleCell(x, y)
 
         // Then
-        then(interactor).should(only()).activateCell(x, y)
+        then(interactor).should(only()).toggleCell(x, y)
     }
 
 }

@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.LinearLayout.HORIZONTAL
+import android.widget.LinearLayout.LayoutParams
+import android.widget.LinearLayout.VERTICAL
 import androidx.appcompat.app.AppCompatActivity
 import com.frederic.millard.android.kata.R
 import com.frederic.millard.android.kata.gameoflife.controller.GameOfLifeController
@@ -26,8 +29,8 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
 
     companion object {
         fun getIntent(context: Context) = Intent(context, GameOfLifeCustomViewActivity::class.java)
-        private const val CELL_WIDTH_PX = 20
-        private const val CELL_HEIGHT_PX = 20
+        private const val CELL_WIDTH_PX = 30
+        private const val CELL_HEIGHT_PX = 30
     }
 
     private lateinit var controller: GameOfLifeController
@@ -61,28 +64,29 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
 
     private fun initWorldDisplay(rowCount: Int, colCount: Int) {
         val rowLinearLayout = LinearLayout(this).apply {
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                                     LinearLayout.LayoutParams.MATCH_PARENT)
-            orientation = LinearLayout.VERTICAL
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+            orientation = VERTICAL
         }
-
         for (row in 0 until rowCount) {
             val colLinearLayout = LinearLayout(this).apply {
-                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                                         LinearLayout.LayoutParams.WRAP_CONTENT)
-                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+                orientation = HORIZONTAL
                 for (col in 0 until colCount) {
-                    val cellView = CellView(this@GameOfLifeCustomViewActivity)
-                    cellView.isActivated = false
-                    cellView.setOnClickListener { controller.activateCell(row, col) }
+                    val cellView = initializeCellView(row, col)
                     cellsMap[row to col] = cellView
                     addView(cellView)
                 }
             }
             rowLinearLayout.addView(colLinearLayout)
         }
-
         worldContent.addView(rowLinearLayout)
+    }
+
+    private fun initializeCellView(row: Int, col: Int): CellView {
+        val cellView = CellView(this@GameOfLifeCustomViewActivity)
+        cellView.isActivated = false
+        cellView.setOnClickListener { controller.toggleCell(row, col) }
+        return cellView
     }
 
     private fun injectObject() {
@@ -97,7 +101,6 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
         Handler(Looper.getMainLooper()).post {
             with(world) {
                 generationTextView.text = generationCount.toString()
-
                 for (row in cells.indices) {
                     val colCells = cells[row]
                     for (col in colCells.indices) {
@@ -109,12 +112,10 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
     }
 
     class CellView(context: Context) : FrameLayout(context) {
-
         init {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             inflater.inflate(R.layout.view_cell, this, true)
             layoutParams = LayoutParams(CELL_WIDTH_PX, CELL_HEIGHT_PX)
         }
-
     }
 }

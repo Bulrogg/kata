@@ -39,16 +39,16 @@ class GameOfLifeConsoleActivity : AppCompatActivity(), GameOfLifeDisplay {
     private fun initAndStartGameOfLife() {
         controller.initWorld(rowCount = 32, colCount = 30)
 
-        controller.activateCell(row = 8, col = 8)
-        controller.activateCell(row = 8, col = 7)
-        controller.activateCell(row = 8, col = 9)
-        controller.activateCell(row = 7, col = 8)
-        controller.activateCell(row = 9, col = 8)
+        controller.toggleCell(row = 8, col = 8)
+        controller.toggleCell(row = 8, col = 7)
+        controller.toggleCell(row = 8, col = 9)
+        controller.toggleCell(row = 7, col = 8)
+        controller.toggleCell(row = 9, col = 8)
 
-        controller.activateCell(row = 9, col = 9)
-        controller.activateCell(row = 9, col = 10)
-        controller.activateCell(row = 9, col = 11)
-        controller.activateCell(row = 9, col = 12)
+        controller.toggleCell(row = 9, col = 9)
+        controller.toggleCell(row = 9, col = 10)
+        controller.toggleCell(row = 9, col = 11)
+        controller.toggleCell(row = 9, col = 12)
 
         controller.changeGenerationTimeValue(1000L)
         controller.start()

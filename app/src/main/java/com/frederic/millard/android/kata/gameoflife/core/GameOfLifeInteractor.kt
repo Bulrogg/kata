@@ -20,11 +20,11 @@ class GameOfLifeInteractor(
         presenter.presentWorld(initialWorld)
     }
 
-    fun activateCell(row: Int, col: Int) {
+    fun toggleCell(row: Int, col: Int) {
         repository.getStoredWorld()?.let {
             val newCells = it.copy().cells
                     .map { row -> row.toMutableList() }
-                    .apply { get(row)[col] = true }
+                    .apply { get(row)[col] = !get(row)[col] }
             val newWorld = it.copy(cells = newCells)
             repository.storeWorld(newWorld)
             presenter.presentWorld(newWorld)

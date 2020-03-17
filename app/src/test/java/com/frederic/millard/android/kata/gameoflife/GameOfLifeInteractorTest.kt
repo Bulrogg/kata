@@ -43,7 +43,7 @@ class GameOfLifeInteractorTest {
     }
 
     @Test
-    fun `activateCell should activate the corresponding cell`() {
+    fun `toggleCell when cell unactived cell should activate the corresponding cell`() {
         // Given
         val world = World(
             rowCount = 2,
@@ -53,12 +53,35 @@ class GameOfLifeInteractorTest {
         given(repository.getStoredWorld()).willReturn(world)
 
         // When
-        interactor.activateCell(1, 1)
+        interactor.toggleCell(1, 1)
 
         // Then
         val newCells = world.copy().cells
                 .map { it.toMutableList() }
                 .apply { get(1)[1] = true }
+        val expectedNewWorld = world.copy(cells = newCells)
+
+        then(repository).should().storeWorld(expectedNewWorld)
+        then(presenter).should().presentWorld(expectedNewWorld)
+    }
+
+    @Test
+    fun `toggleCell when cell activated cell should activate the corresponding cell`() {
+        // Given
+        val world = World(
+            rowCount = 2,
+            colCount = 3,
+            generationCount = 2,
+            cells = List(3) { List(3) { true } })
+        given(repository.getStoredWorld()).willReturn(world)
+
+        // When
+        interactor.toggleCell(1, 1)
+
+        // Then
+        val newCells = world.copy().cells
+                .map { it.toMutableList() }
+                .apply { get(1)[1] = false }
         val expectedNewWorld = world.copy(cells = newCells)
 
         then(repository).should().storeWorld(expectedNewWorld)
