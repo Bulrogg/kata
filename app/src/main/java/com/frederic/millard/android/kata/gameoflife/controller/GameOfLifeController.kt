@@ -45,12 +45,17 @@ private class GenerationTimer(private var generationTime: Long, private val runF
         this.generationTime = generationTime
     }
 
-    init {
-        timer.scheduleAtFixedRate(object : TimerTask() {
+    private fun runInfiniteLoop() {
+        timer.schedule(object : TimerTask() {
             override fun run() {
                 if (generationRunning) runFunction()
+                runInfiniteLoop()
             }
-        }, 0, generationTime)
+        }, generationTime)
+    }
+
+    init {
+        runInfiniteLoop()
     }
 
 }

@@ -23,6 +23,8 @@ import com.frederic.millard.android.kata.gameoflife.presentation.GameOfLifeDispl
 import com.frederic.millard.android.kata.gameoflife.presentation.GameOfLifePresenter
 import com.frederic.millard.android.kata.gameoflife.repository.WorldRepository
 import kotlinx.android.synthetic.main.activity_game_of_life_custom_view.*
+import kotlin.math.max
+import kotlin.math.min
 
 
 class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
@@ -37,12 +39,16 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
 
     private val cellsMap: MutableMap<Pair<Int, Int>, CellView> = mutableMapOf()
 
+    private var generationTime: Long = 700L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_of_life_custom_view)
 
+        slowButton.setOnClickListener { changeGenerationTime(max(generationTime - 100, 100)) }
         startButton.setOnClickListener { controller.start() }
         pauseButton.setOnClickListener { controller.stop() }
+        speedButton.setOnClickListener { changeGenerationTime(min(generationTime + 100, 5000)) }
 
         injectObject()
 
@@ -57,9 +63,16 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
                 val colCount = worldContent.width / CELL_WIDTH_PX
                 initWorldDisplay(rowCount, colCount)
                 controller.initWorld(rowCount, colCount)
-                controller.changeGenerationTimeValue(700L)
+                changeGenerationTime(generationTime)
             }
         })
+    }
+
+    // TODO buerk, devrait être dans le controller
+    private fun changeGenerationTime(newGenerationTime: Long) {
+        generationTime = newGenerationTime
+        controller.changeGenerationTimeValue(newGenerationTime)
+        generationTimeTextView.text = newGenerationTime.toString()
     }
 
     private fun initWorldDisplay(rowCount: Int, colCount: Int) {
@@ -100,7 +113,7 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
     override fun displayWorld(world: World) {
         Handler(Looper.getMainLooper()).post {
             with(world) {
-                generationTextView.text = generationCount.toString()
+                generationCountTextView.text = generationCount.toString()
                 for (row in cells.indices) {
                     val colCells = cells[row]
                     for (col in colCells.indices) {

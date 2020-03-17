@@ -7,11 +7,19 @@
     tools:context=".gameoflife.GameOfLifeCustomViewActivity">
 
     <ImageButton
+        android:id="@+id/slowButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_fast_rewind_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_play_arrow_black_24dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/slowButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -22,8 +30,38 @@
         app:layout_constraintStart_toEndOf="@id/startButton"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/speedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_fast_forward_black_24dp"
+        app:layout_constraintStart_toEndOf="@id/pauseButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/generationTextView"
+        android:id="@+id/generationTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/separator"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="700" />
+
+    <TextView
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:text="-"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/generationCountTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/generationCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -31,14 +69,14 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="000" />
+        tools:text="23" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/controllerBarrier"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="generationTextView,startButton" />
+        app:constraint_referenced_ids="startButton,pauseButton,slowButton,speedButton,generationCountTextView,generationTimeTextView" />
 
     <FrameLayout
         android:id="@+id/worldContent"
