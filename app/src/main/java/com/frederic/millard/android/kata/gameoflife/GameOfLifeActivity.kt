@@ -22,20 +22,21 @@ class GameOfLifeActivity : GameOfLifeDisplay {
     }
 
     fun simulateInteraction() {
-        controller.initWorld(height = 20, width = 20)
+        controller.initWorld(rowCount = 20, colCount = 20)
 
-        controller.activateCell(x = 8, y = 8)
-        controller.activateCell(x = 8, y = 7)
-        controller.activateCell(x = 8, y = 9)
-        controller.activateCell(x = 7, y = 8)
-        controller.activateCell(x = 9, y = 8)
+        controller.activateCell(row = 8, col = 8)
+        controller.activateCell(row = 8, col = 7)
+        controller.activateCell(row = 8, col = 9)
+        controller.activateCell(row = 7, col = 8)
+        controller.activateCell(row = 9, col = 8)
 
-        //controller.activateCell(x = 9, y = 9)
-        //controller.activateCell(x = 9, y = 10)
-        //controller.activateCell(x = 9, y = 11)
-        //controller.activateCell(x = 9, y = 12)
+        //controller.activateCell(row = 9, col = 9)
+        //controller.activateCell(row = 9, col = 10)
+        //controller.activateCell(row = 9, col = 11)
+        //controller.activateCell(row = 9, col = 12)
 
-        controller.start(generationTime = 700L)
+        controller.changeGenerationTimeValue(700L)
+        controller.start()
     }
 
     override fun displayWorld(world: World) {

@@ -31,21 +31,27 @@ class GameOfLifeConsoleActivity : AppCompatActivity(), GameOfLifeDisplay {
         initAndStartGameOfLife()
     }
 
+    override fun onStop() {
+        super.onStop()
+        controller.stop()
+    }
+
     private fun initAndStartGameOfLife() {
-        controller.initWorld(height = 20, width = 20)
+        controller.initWorld(rowCount = 32, colCount = 30)
 
-        controller.activateCell(x = 8, y = 8)
-        controller.activateCell(x = 8, y = 7)
-        controller.activateCell(x = 8, y = 9)
-        controller.activateCell(x = 7, y = 8)
-        controller.activateCell(x = 9, y = 8)
+        controller.activateCell(row = 8, col = 8)
+        controller.activateCell(row = 8, col = 7)
+        controller.activateCell(row = 8, col = 9)
+        controller.activateCell(row = 7, col = 8)
+        controller.activateCell(row = 9, col = 8)
 
-        controller.activateCell(x = 9, y = 9)
-        controller.activateCell(x = 9, y = 10)
-        controller.activateCell(x = 9, y = 11)
-        controller.activateCell(x = 9, y = 12)
+        controller.activateCell(row = 9, col = 9)
+        controller.activateCell(row = 9, col = 10)
+        controller.activateCell(row = 9, col = 11)
+        controller.activateCell(row = 9, col = 12)
 
-        controller.start(generationTime = 1000L)
+        controller.changeGenerationTimeValue(1000L)
+        controller.start()
     }
 
     private fun injectObject() {

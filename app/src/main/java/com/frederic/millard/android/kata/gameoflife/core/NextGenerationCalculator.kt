@@ -13,8 +13,8 @@ class NextGenerationCalculator(private var livingCellAroundCalculator: LivingCel
     }
 
     private fun World.computeNewCells(world: World) =
-        List(height) { row ->
-            List(width) { col ->
+        List(rowCount) { row ->
+            List(colCount) { col ->
                 val cellIsLiving = cells[row][col]
                 val livingNeighboursCount = livingCellAroundCalculator.computeLivingCellsAround(world, row, col)
                 if (cellIsLiving) NUMBERS_OF_LIVING_NEIGHBOURS_TO_SURVIVE.contains(livingNeighboursCount)

@@ -1,8 +1,9 @@
 package com.frederic.millard.android.kata
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.frederic.millard.android.kata.gameoflife.GameOfLifeConsoleActivity
+import com.frederic.millard.android.kata.gameoflife.GameOfLifeCustomViewActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -12,5 +13,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         gameOfLifeConsoleButton.setOnClickListener { startActivity(GameOfLifeConsoleActivity.getIntent(this)) }
+        gameOfLifeCustomViewButton.setOnClickListener { startActivity(GameOfLifeCustomViewActivity.getIntent(this)) }
     }
 }

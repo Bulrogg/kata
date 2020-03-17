@@ -54,8 +54,8 @@ class LivingCellAroundCalculatorTest {
 
         private fun generateWorld(livingCells: List<Pair<Int, Int>>): World {
             return World(
-                height = 3,
-                width = 3,
+                rowCount = 3,
+                colCount = 3,
                 generationCount = 0,
                 cells = List(3) { row -> List(3) { col -> livingCells.contains(row to col) } }
             )

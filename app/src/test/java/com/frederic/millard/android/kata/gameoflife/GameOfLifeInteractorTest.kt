@@ -34,8 +34,8 @@ class GameOfLifeInteractorTest {
 
         // Then
         val world = World(
-            height = 3,
-            width = 2,
+            rowCount = 3,
+            colCount = 2,
             generationCount = 0,
             cells = List(3) { List(2) { false } })
         then(repository).should().storeWorld(world)
@@ -46,8 +46,8 @@ class GameOfLifeInteractorTest {
     fun `activateCell should activate the corresponding cell`() {
         // Given
         val world = World(
-            height = 2,
-            width = 3,
+            rowCount = 2,
+            colCount = 3,
             generationCount = 2,
             cells = List(3) { List(3) { false } })
         given(repository.getStoredWorld()).willReturn(world)
@@ -56,11 +56,13 @@ class GameOfLifeInteractorTest {
         interactor.activateCell(1, 1)
 
         // Then
-        val newWorld = world.copy().cells
+        val newCells = world.copy().cells
                 .map { it.toMutableList() }
                 .apply { get(1)[1] = true }
+        val expectedNewWorld = world.copy(cells = newCells)
 
-        then(repository).should().storeWorld(world.copy(cells = newWorld))
+        then(repository).should().storeWorld(expectedNewWorld)
+        then(presenter).should().presentWorld(expectedNewWorld)
     }
 
     @Test

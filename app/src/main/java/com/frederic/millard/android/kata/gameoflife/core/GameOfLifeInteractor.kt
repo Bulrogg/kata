@@ -9,24 +9,25 @@ class GameOfLifeInteractor(
     private val repository: WorldRepository,
     private val nextGenerationCalculator: NextGenerationCalculator) {
 
-    fun initWorld(height: Int, width: Int) {
+    fun initWorld(rowCount: Int, colCount: Int) {
         val initialWorld = World(
-            height = height,
-            width = width,
+            rowCount = rowCount,
+            colCount = colCount,
             generationCount = 0,
-            cells = List(height) { List(width) { false } }
+            cells = List(rowCount) { List(colCount) { false } }
         )
         repository.storeWorld(initialWorld)
         presenter.presentWorld(initialWorld)
     }
 
-    fun activateCell(x: Int, y: Int) {
-        val actualWorld = repository.getStoredWorld()
-        actualWorld?.let {
+    fun activateCell(row: Int, col: Int) {
+        repository.getStoredWorld()?.let {
             val newCells = it.copy().cells
                     .map { row -> row.toMutableList() }
-                    .apply { get(x)[y] = true }
-            repository.storeWorld(it.copy(cells = newCells))
+                    .apply { get(row)[col] = true }
+            val newWorld = it.copy(cells = newCells)
+            repository.storeWorld(newWorld)
+            presenter.presentWorld(newWorld)
         }
     }
 

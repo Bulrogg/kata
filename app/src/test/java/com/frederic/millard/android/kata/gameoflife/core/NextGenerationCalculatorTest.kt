@@ -56,8 +56,8 @@ class NextGenerationCalculatorTest {
     fun `computeNextGeneration should increment generation number`() {
         // Given
         val world = World(
-            height = 0,
-            width = 0,
+            rowCount = 0,
+            colCount = 0,
             generationCount = 2,
             cells = emptyList()
         )
@@ -74,8 +74,8 @@ class NextGenerationCalculatorTest {
     fun `computeNextGeneration test data`(testData: TestData) {
         // Given
         val world = World(
-            height = 1,
-            width = 1,
+            rowCount = 1,
+            colCount = 1,
             generationCount = 0,
             cells = List(1) { List(1) { testData.livingCell } }
         )
