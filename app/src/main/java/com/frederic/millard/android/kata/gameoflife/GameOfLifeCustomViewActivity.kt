@@ -29,8 +29,8 @@ class GameOfLifeCustomViewActivity : AppCompatActivity(), GameOfLifeDisplay {
 
     companion object {
         fun getIntent(context: Context) = Intent(context, GameOfLifeCustomViewActivity::class.java)
-        private const val CELL_WIDTH_PX = 30
-        private const val CELL_HEIGHT_PX = 30
+        private const val CELL_WIDTH_PX = 35
+        private const val CELL_HEIGHT_PX = 35
     }
 
     private lateinit var controller: GameOfLifeController
